@@ -58,15 +58,15 @@ resource "aws_security_group" "backend_nsg" {
   }
 }
 
-resource "aws_subnet_network_acl_association" "frontend_nacl_association" {
-  subnet_id          = aws_subnet.frontend.id
-  network_acl_id     = aws_security_group.frontend_nsg.id
-}
+#resource "aws_subnet_network_acl_association" "frontend_nacl_association" {
+ # subnet_id          = aws_subnet.frontend.id
+ # network_acl_id     = aws_security_group.frontend_nsg.id
+#}
 
-resource "aws_subnet_network_acl_association" "backend_nacl_association" {
-  subnet_id          = aws_subnet.backend.id
-  network_acl_id     = aws_security_group.backend_nsg.id
-}
+#resource "aws_subnet_network_acl_association" "backend_nacl_association" {
+#  subnet_id          = aws_subnet.backend.id
+#  network_acl_id     = aws_security_group.backend_nsg.id
+#}
 
 
 
@@ -125,15 +125,15 @@ resource "aws_security_group" "mgmt_nsg" {
   }
 }
 
-resource "aws_subnet_network_acl_association" "dmz_nacl_association" {
-  subnet_id          = aws_subnet.dmz.id
-  network_acl_id     = aws_security_group.dmz_nsg.id
-}
+#resource "aws_subnet_network_acl_association" "dmz_nacl_association" {
+#  subnet_id          = aws_subnet.dmz.id
+#  network_acl_id     = aws_security_group.dmz_nsg.id
+#}
 
-resource "aws_subnet_network_acl_association" "mgmt_nacl_association" {
-  subnet_id          = aws_subnet.mgmt.id
-  network_acl_id     = aws_security_group.mgmt_nsg.id
-}
+#resource "aws_subnet_network_acl_association" "mgmt_nacl_association" {
+  #subnet_id          = aws_subnet.mgmt.id
+ # network_acl_id     = aws_security_group.mgmt_nsg.id
+#}
 
 
 ## resource "aws_vpc_peering_connection" "vpc_peering" {
