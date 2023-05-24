@@ -164,7 +164,7 @@ resource "aws_db_instance" "database" {
   instance_class         = "db.t2.micro"
   username               = "admin"
   password               = "password"
-  subnet_group_name      = "backend"
+ # subnet_group_name      = "backend"
   vpc_security_group_ids = [aws_security_group.backend_nsg.id]
 }
 
