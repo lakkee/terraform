@@ -1,3 +1,12 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
 provider "aws" {
   region = "us-east-1"
 }
@@ -146,4 +155,31 @@ resource "aws_vpc_peering_connection_accepter" "vpc_peering_accepted" {
   provider      = aws.us-east-1
   vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
   auto_accept               = true
+}
+
+resource "aws_instance" "web_application" {
+  ami           = "ami-0889a44b331db0194"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.frontend.id
+  vpc_security_group_ids = [aws_security_group.frontend_nsg.id]
+
+}
+
+resource "aws_db_instance" "database" {
+  allocated_storage      = 20
+  engine                 = "mysql"
+  engine_version         = "5.7"
+  instance_class         = "db.t2.micro"
+  username               = "admin"
+  password               = "password"
+  subnet_group_name      = "backend"
+  vpc_security_group_ids = [aws_security_group.backend_nsg.id]
+}
+
+resource "aws_instance" "jump_server" {
+  ami           = "ami-0889a44b331db0194"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.mgmt.id
+  vpc_security_group_ids = [aws_security_group.mgmt_nsg.id]
+
 }
