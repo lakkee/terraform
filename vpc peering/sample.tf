@@ -144,18 +144,18 @@ resource "aws_subnet_network_acl_association" "mgmt_nacl_association" {
 }
 
 
-resource "aws_vpc_peering_connection" "vpc_peering" {
-  vpc_id        = aws_vpc.vpc1.id
-  peer_vpc_id   = aws_vpc.vpc2.id
-  peer_region   = "us-east-1"
-  auto_accept   = true
-}
+## resource "aws_vpc_peering_connection" "vpc_peering" {
+ # vpc_id        = aws_vpc.vpc1.id
+ # peer_vpc_id   = aws_vpc.vpc2.id
+ # peer_region   = "us-east-1"
+ # auto_accept   = true
+#}
 
-resource "aws_vpc_peering_connection_accepter" "vpc_peering_accepted" {
-  provider      = aws.us-east-1
-  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
-  auto_accept               = true
-}
+#resource "aws_vpc_peering_connection_accepter" "vpc_peering_accepted" {
+  #provider      = aws.us-east-1
+ # vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+#  auto_accept               = true
+#}
 
 resource "aws_instance" "web_application" {
   ami           = "ami-0889a44b331db0194"
