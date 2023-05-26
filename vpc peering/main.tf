@@ -24,7 +24,7 @@ resource "aws_subnet" "backend" {
 }
 
 resource "aws_security_group" "frontend_nsg" {
-  vpc_id = aws_vpc.vpc1
+  vpc_id = "aws_vpc.vpc1"
 
   ingress {
     from_port   = 80
