@@ -6,7 +6,7 @@ resource "aws_vpc" "vpc2" {
 }
 
 resource "aws_subnet" "frontend" {
-  vpc_id     = "aws_vpc.vpc1"
+  vpc_id     = "${aws_vpc.vpc1.id}"
   cidr_block = "10.0.1.0/24"
 
   tags = {
@@ -15,7 +15,7 @@ resource "aws_subnet" "frontend" {
 }
 
 resource "aws_subnet" "backend" {
-  vpc_id     = "aws_vpc.vpc1"
+  vpc_id     = "${aws_vpc.vpc1.id}"
   cidr_block = "10.0.2.0/24"
 
   tags = {
@@ -24,7 +24,7 @@ resource "aws_subnet" "backend" {
 }
 
 resource "aws_security_group" "frontend_nsg" {
-  vpc_id = "aws_vpc.vpc1"
+  vpc_id = "${aws_vpc.vpc1.id}"
 
   ingress {
     from_port   = 80
@@ -49,7 +49,7 @@ resource "aws_security_group" "frontend_nsg" {
 }
 
 resource "aws_security_group" "backend_nsg" {
-  vpc_id ="aws_vpc.vpc1"
+  vpc_id ="${aws_vpc.vpc1.id}"
 
   ingress {
     from_port   = 1433
@@ -62,18 +62,18 @@ resource "aws_security_group" "backend_nsg" {
 
 
 resource "aws_subnet" "dmz_subnet" {
-  vpc_id                  = "aws_vpc.vpc2"
+  vpc_id                  = "${aws_vpc.vpc2.id}"
   cidr_block              = "172.168.1.0/24"
 }
 
 resource "aws_subnet" "mgmt_subnet" {
-  vpc_id                  = "aws_vpc.vpc2"
+  vpc_id                  = "${aws_vpc.vpc2.id}"
   cidr_block              = "172.168.2.0/24"
 }
 
 resource "aws_security_group" "dmz_nsg" {
 
-  vpc_id ="aws_vpc.vpc2"
+  vpc_id ="${aws_vpc.vpc2.id}"
 
   ingress {
     from_port   = 0
@@ -92,7 +92,7 @@ resource "aws_security_group" "dmz_nsg" {
 
 resource "aws_security_group" "mgmt_nsg" {
 
-  vpc_id = "aws_vpc.vpc2"
+  vpc_id = "${aws_vpc.vpc2.id}"
 
   ingress {
     from_port   = 443
@@ -124,8 +124,8 @@ resource "aws_security_group" "mgmt_nsg" {
 }
 
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  vpc_id        = "aws_vpc.vpc1.id"
-  peer_vpc_id   = "aws_vpc.vpc2.id"
+  vpc_id        = "${aws_vpc.vpc1.id}"
+  peer_vpc_id   = aws_vpc.vpc2.id
   peer_region   = "us-east-1"
   auto_accept   = true
 }
