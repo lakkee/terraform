@@ -126,7 +126,6 @@ resource "aws_security_group" "mgmt_nsg" {
 resource "aws_vpc_peering_connection" "vpc_peering" {
   vpc_id        = "${aws_vpc.vpc1.id}"
   peer_vpc_id   = aws_vpc.vpc2.id
-  peer_region   = "us-east-1"
   auto_accept   = true
 }
 
