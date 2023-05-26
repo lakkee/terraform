@@ -122,3 +122,22 @@ resource "aws_security_group" "mgmt_nsg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_vpc_peering_connection" "vpc_peering" {
+  vpc_id        = "aws_vpc.vpc1.id"
+  peer_vpc_id   = "aws_vpc.vpc2.id"
+  peer_region   = "us-east-1"
+  auto_accept   = true
+}
+
+#resource "aws_route" "vpc1_peering_route" {
+ # route_table_id            = aws_vpc.vpc1_route_table.id
+  #destination_cidr_block    = aws_vpc.vpc2.cidr_block
+#  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+#}
+
+#resource "aws_route" "vpc2_peering_route" {
+#  route_table_id            = aws_vpc.vpc2_route_table.id
+ # destination_cidr_block    = aws_vpc.vpc1.cidr_block
+ # vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+#}
