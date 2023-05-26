@@ -6,7 +6,7 @@ resource "aws_vpc" "vpc2" {
 }
 
 resource "aws_subnet" "frontend" {
-  vpc_id     = aws_vpc.vpc1
+  vpc_id     = "aws_vpc.vpc1"
   cidr_block = "10.0.1.0/24"
 
   tags = {
@@ -15,7 +15,7 @@ resource "aws_subnet" "frontend" {
 }
 
 resource "aws_subnet" "backend" {
-  vpc_id     = aws_vpc.vpc1
+  vpc_id     = "aws_vpc.vpc1"
   cidr_block = "10.0.2.0/24"
 
   tags = {
@@ -49,7 +49,7 @@ resource "aws_security_group" "frontend_nsg" {
 }
 
 resource "aws_security_group" "backend_nsg" {
-  vpc_id = aws_vpc.vpc1
+  vpc_id ="aws_vpc.vpc1"
 
   ingress {
     from_port   = 1433
