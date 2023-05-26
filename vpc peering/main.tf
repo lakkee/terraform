@@ -141,3 +141,41 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
  # destination_cidr_block    = aws_vpc.vpc1.cidr_block
  # vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
 #}
+
+resource "aws_instance" "frontend_instance" {
+  ami           = "ami-0889a44b331db0194"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.frontend.id
+  vpc_security_group_ids = [aws_security_group.frontend_nsg.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              apt-get update
+              apt-get install -y nginx
+              service nginx start
+              EOF
+}
+
+resource "aws_instance" "backend_instance" {
+  ami           = "ami-0889a44b331db0194"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.backend.id
+  vpc_security_group_ids = [aws_security_group.backend_nsg.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              apt-get update
+              apt-get install -y mongodb
+              service mongodb start
+              EOF
+}
+
+resource "aws_instance" "bastion_server" {
+  ami           = "ami-0889a44b331db0194"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.mgmt_subnet.id
+  vpc_security_group_ids = [aws_security_group.mgmt_nsg.id]
+  tags = {
+    Name = "Bastion Server"
+  }
+}
