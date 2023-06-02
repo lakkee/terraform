@@ -89,7 +89,7 @@ resource "aws_security_group" "mgmt_nsg" {
   vpc_id = "aws_vpc.vpc2.id"
 
   dynamic "ingress" {
-    for_each = "var.mgmt_inbound_ports"
+    for_each = var.mgmt_inbound_ports
     content {
       from_port   = ingress.value
       to_port     = ingress.value
