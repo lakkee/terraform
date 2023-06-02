@@ -10,7 +10,6 @@ resource "aws_vpc" "vpc2" {
 resource "aws_subnet" "frontend" {
   vpc_id     = "aws_vpc.vpc1.id"
   cidr_block = var.frontend_subnet_cidr_block
-
   tags = {
     Name = "frontend"
   }
@@ -24,7 +23,6 @@ resource "aws_subnet" "backend" {
     Name = "backend"
   }
 }
-
 
 resource "aws_security_group" "frontend_nsg" {
   vpc_id = "aws_vpc.vpc1.id"
