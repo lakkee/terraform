@@ -140,6 +140,6 @@ resource "aws_instance" "bastion_server" {
   subnet_id     = aws_subnet.mgmt_subnet.id
   vpc_security_group_ids = [aws_security_group.mgmt_nsg.id]
   tags = {
-    Name = "Bastion Servers"
+    Name = "Bastion Server"
   }
 }
