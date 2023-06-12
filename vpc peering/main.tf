@@ -8,7 +8,7 @@ resource "aws_vpc" "vpc2" {
 
 
 resource "aws_subnet" "frontend" {
-  vpc_id     = "aws_vpc.vpc1.id"
+  vpc_id     =aws_vpc.vpc1.id
   cidr_block = var.frontend_subnet_cidr_block
   tags = {
     Name = "frontend"
@@ -16,7 +16,7 @@ resource "aws_subnet" "frontend" {
 }
 
 resource "aws_subnet" "backend" {
-  vpc_id     = "aws_vpc.vpc1.id"
+  vpc_id     = aws_vpc.vpc1.id
   cidr_block = var.backend_subnet_cidr_block
 
   tags = {
@@ -25,7 +25,7 @@ resource "aws_subnet" "backend" {
 }
 
 resource "aws_security_group" "frontend_nsg" {
-  vpc_id = "aws_vpc.vpc1.id"
+  vpc_id = aws_vpc.vpc1.id
 
   dynamic "ingress" {
     for_each = var.frontend_inbound_ports
@@ -40,7 +40,7 @@ resource "aws_security_group" "frontend_nsg" {
 
 
 resource "aws_security_group" "backend_nsg" {
-  vpc_id = "aws_vpc.vpc1.id"
+  vpc_id = aws_vpc.vpc1.id
 
   dynamic "ingress" {
     for_each =var.backend_inbound_ports
@@ -54,18 +54,18 @@ resource "aws_security_group" "backend_nsg" {
 }
 
 resource "aws_subnet" "dmz_subnet" {
-  vpc_id                  = "aws_vpc.vpc2.id"
+  vpc_id                  = aws_vpc.vpc2.id
   cidr_block              = var.dmz_subnet_cidr_block
 }
 
 resource "aws_subnet" "mgmt_subnet" {
-  vpc_id                  = "aws_vpc.vpc2.id"
+  vpc_id                  = aws_vpc.vpc2.id
   cidr_block              = var.mgmt_subnet_cidr_block
 }
 
 resource "aws_security_group" "dmz_nsg" {
 
-  vpc_id ="aws_vpc.vpc2.id"
+  vpc_id =aws_vpc.vpc2.id
 
   ingress {
     from_port   = 0
@@ -84,7 +84,7 @@ resource "aws_security_group" "dmz_nsg" {
 
 
 resource "aws_security_group" "mgmt_nsg" {
-  vpc_id = "aws_vpc.vpc2.id"
+  vpc_id = aws_vpc.vpc2.id
 
   dynamic "ingress" {
     for_each = var.mgmt_inbound_ports
@@ -101,7 +101,7 @@ resource "aws_security_group" "mgmt_nsg" {
 
 
 resource "aws_vpc_peering_connection" "vpc_peering" {
-  vpc_id        = "aws_vpc.vpc1.id"
+  vpc_id        = aws_vpc.vpc1.id
   peer_vpc_id   = aws_vpc.vpc2.id
   auto_accept   = true
 }
